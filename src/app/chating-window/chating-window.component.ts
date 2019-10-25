@@ -10,7 +10,7 @@ export class ChatingWindowComponent implements OnInit {
 
   get getUser()
   {
-    return this.service.user;
+    return this.service.awayuser;
   }
 
   get data()
@@ -24,21 +24,20 @@ export class ChatingWindowComponent implements OnInit {
 
   homePersonData:any;
   awayPersonData:any;
-
-   txtareaVal:any="";
+  
+  txtareaVal:any="";
 
   confirmText(funval:string){
 
-    debugger;
-
-    this.txtareaVal = "";
-
     this.service.AllChatMessages.push({
         from:this.homePersonData.id,
-        to:this.awayPersonData.id,
+        to:this.getUser.id,
         message: funval,
         time:"9:15 AM , Today"
       });
+
+      this.txtareaVal = "";
+
   }
 
 
@@ -55,7 +54,7 @@ export class ChatingWindowComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.awayPersonData = this.service.user;
+    this.awayPersonData = this.service.awayuser;
     let loginKey = 'login information';
     let loginInfo = this.service.usersList[5];
     localStorage.setItem(loginKey, JSON.stringify(loginInfo));

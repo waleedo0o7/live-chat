@@ -48,11 +48,12 @@ export class SendUserDetailsService {
     {from:100,to:4,message:'You are welcome',time:"8:59 AM , Today"},
   ];
 
-  user: any = this.usersList[0];
+  // this is away user [0] to appare in the first time open chat window
+  awayuser: any = this.usersList[0];
 
   getMessages(homeUser:any , awayUser:any ){
     homeUser =  this.usersList[5].id;
-    awayUser =  this.user.id;
+    awayUser =  this.awayuser.id;
     return this.AllChatMessages.filter(function(msg){
       return msg.from == homeUser && msg.to == awayUser || msg.to == homeUser  && msg.from == awayUser ;
     })
@@ -67,7 +68,9 @@ export class SendUserDetailsService {
   }
 
   setUserId(user){
-    this.user = user;
+    debugger;
+    this.awayuser = user;
+    debugger;
   }
 
   constructor() { }
