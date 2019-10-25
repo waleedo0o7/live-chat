@@ -277,10 +277,14 @@ margin-bottom: 15px !important;
         color: #fff;
         margin-bottom: 20px;
 
-    img{
-        border-radius: 50%;
-        width: 100px;
-        height: 100px;
-        margin-right: 10px;
-    }
+        img{
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            margin-right: 10px;
+        }
+        p , h3{
+            margin: 0;
+            font-size: 22px;
+        }
 }
