@@ -67,10 +67,8 @@ export class SendUserDetailsService {
     })
   }
 
-  setUserId(user){
-    debugger;
-    this.awayuser = user;
-    debugger;
+  setUserId(user){ 
+    this.awayuser = user; 
   }
 
   constructor() { }

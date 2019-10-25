@@ -1,5 +1,12 @@
-<div class="container-fluid h-100">
-	<div class="row justify-content-center h-100">
+<div class="login-user-info ">
+	<img class="img-fluid" src="{{loginInfo.img}}">
+	<div>
+		<h3> Welcome {{loginInfo.name}} , Your Id Is ( {{loginInfo.id}} ) </h3>
+		<p> Enjoy Chating ;)</p>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row justify-content-center">
 		<div class="col-md-4 col-xl-3 chat">
 			<users-list></users-list>
 		</div>

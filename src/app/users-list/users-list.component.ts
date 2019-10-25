@@ -21,7 +21,6 @@ export class UsersListComponent implements OnInit {
   }
 
   sendClickedUserData(userId){
-    debugger;
     this.service.setUserId(userId);
   }
 

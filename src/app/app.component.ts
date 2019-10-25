@@ -1,5 +1,6 @@
 import { Component, Input, Output, NgModule } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { SendUserDetailsService } from './shared/send-user-details.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class AppComponent {
   title = 'live-chat';
 
-  constructor() {
+  loginInfo:any;
+
+  constructor( private service:SendUserDetailsService) {
   }
 
   ngOnInit() {
-    
+    this.loginInfo = this.service.usersList[5];
   }
 }

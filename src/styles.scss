@@ -261,3 +261,26 @@ margin-bottom: 15px !important;
 
 
 
+
+
+.login-user-info{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        font-size: 32px;
+        padding: 15px 0;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        color: #fff;
+        margin-bottom: 20px;
+
+    img{
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+    }
+}
