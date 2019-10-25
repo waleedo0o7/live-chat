@@ -58,16 +58,15 @@ export class SendUserDetailsService {
     })
   }
 
-  
   usersListResult(searchedName){
     var searchedNameLC = searchedName.toLowerCase()
+
     return this.usersList.filter(function(oneUser:any){
-      return oneUser.name.toLowerCase().includes(searchedNameLC) ;
+      return oneUser.name.toLowerCase().includes(searchedNameLC) && oneUser.id !== 100 ;
     })
   }
 
-  setUserId(user)
-  {
+  setUserId(user){
     this.user = user;
   }
 
