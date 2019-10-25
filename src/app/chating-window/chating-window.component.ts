@@ -13,15 +13,6 @@ export class ChatingWindowComponent implements OnInit {
     return this.service.awayuser;
   }
 
-  get data()
-  {
-    return this.service.serviceData;
-  }
-
-  set data(value: string) {
-    this.service.serviceData = value;
-  }
-
   homePersonData:any;
   awayPersonData:any;
   
@@ -37,7 +28,6 @@ export class ChatingWindowComponent implements OnInit {
       });
 
       this.txtareaVal = "";
-
   }
 
 

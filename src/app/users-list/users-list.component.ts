@@ -8,20 +8,15 @@ import { SendUserDetailsService } from '../shared/send-user-details.service';
 })
 export class UsersListComponent implements OnInit {
 
-  get data():string {
-      return this.service.serviceData;
-  }
-  set data(value: string) {
-      this.service.serviceData = value;
-  }
-
   usersList:any;
 
   constructor(private service: SendUserDetailsService) {
   }
 
   sendClickedUserData(userId){
+    debugger;
     this.service.setUserId(userId);
+    debugger;
   }
 
   searchedName:any;
@@ -39,8 +34,12 @@ export class UsersListComponent implements OnInit {
     }
   }
 
+  
+  loginInfo:any;
+
   ngOnInit() {
     this.usersList = this.service.usersList;
+    this.loginInfo = this.service.usersList[5];
   }
 
 }

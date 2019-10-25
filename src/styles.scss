@@ -257,11 +257,46 @@ margin-bottom: 15px !important;
 
 
 
+.login-page{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
 
+    .card{
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        color: #fff;
+        padding: 30px;
+        padding-top: 50px;
+        img{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: calc(50% - 50px);
+            top: -56px;
+        }
+        h2{
+            text-align: center;
+        }
+    }
+}
 
+.btn-primary {
+    background-color: #00a3a2;
+    border-color: #00a3a2;
+    cursor: pointer;
+}
 
-
-
+.btn-primary:hover {
+    background-color: #000000;
+    border-color: #000000;
+}
 
 .login-user-info{
         display: flex;

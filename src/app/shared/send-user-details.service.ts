@@ -1,12 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SendUserDetailsService {
-  
-  serviceData: string;
+
+  login(username,password){
+
+    if( username == "waleed" && password == "123"){
+    this.router.navigate(['main-chat']);
+
+  } else {
+
+    alert("username: waleed - password 123");
+
+  }
+}
 
   usersList = [
     { id:1, name:"Khalid",state:"online",img:"../assets/01.jpg" },
@@ -71,5 +82,5 @@ export class SendUserDetailsService {
     this.awayuser = user; 
   }
 
-  constructor() { }
+  constructor(private router: Router) { }
 }

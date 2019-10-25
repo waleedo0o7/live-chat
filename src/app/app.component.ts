@@ -11,12 +11,10 @@ import { SendUserDetailsService } from './shared/send-user-details.service';
 export class AppComponent {
   title = 'live-chat';
 
-  loginInfo:any;
 
   constructor( private service:SendUserDetailsService) {
   }
 
   ngOnInit() {
-    this.loginInfo = this.service.usersList[5];
   }
 }

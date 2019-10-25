@@ -18,14 +18,16 @@ import { environment } from '../environments/environment';
 // Firebase modules 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth'; 
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './login/login.component'; 
 
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
-    ChatingWindowComponent
+    ChatingWindowComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
