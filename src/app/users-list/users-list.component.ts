@@ -9,6 +9,7 @@ import { SendUserDetailsService } from '../shared/send-user-details.service';
 export class UsersListComponent implements OnInit {
 
   usersList:any;
+  loginedUser:any;
 
   constructor(private service: SendUserDetailsService) {
   }
@@ -21,25 +22,26 @@ export class UsersListComponent implements OnInit {
 
   searchedName:any;
 
-  get searchedResult(){
+  get searchedResult(){debugger;
     if( this.searchedName ){
       var x = this.service.usersListResult(this.searchedName);
       return x ;
-    } else {
-
+    } else {debugger;
+      var y = this.loginedUser;
       return this.service.usersList.filter(function(item){
-        return item.id !== 100;
+        return item.id !== y.id;
       });
       
     }
   }
 
-  
-  loginInfo:any;
 
   ngOnInit() {
+    debugger;
     this.usersList = this.service.usersList;
-    this.loginInfo = this.service.usersList[5];
+    debugger;
+    this.loginedUser = this.service.loginedUser;
+    debugger;
   }
 
 }

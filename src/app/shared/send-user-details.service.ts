@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-
 @Injectable({
   providedIn: 'root'
 })
+
 export class SendUserDetailsService {
+
+  loginedUser: any;
 
   login(username,password){
 
-    if( username == "waleed" && password == "123"){
+    debugger;
+    
+    this.loginedUser = this.usersList.find( item => item.name === username );
+    
+  if( username == this.loginedUser.name &&  password == "123"){
+
     this.router.navigate(['main-chat']);
 
   } else {
@@ -17,15 +24,16 @@ export class SendUserDetailsService {
     alert("username: waleed - password 123");
 
   }
+
 }
 
   usersList = [
-    { id:1, name:"Khalid",state:"online",img:"../assets/01.jpg" },
-    { id:2, name:"Taherah Big",state:"offline",img:"../assets/03.jpg" },
-    { id:3, name:"Sami Rafi",state:"online",img:"../assets/02.jpg" },
-    { id:4, name:"Nargis Hawa",state:"online",img:"../assets/04.jpg" },
-    { id:5, name:"Rashid Samim",state:"offline",img:"../assets/05.jpg" },
-    { id:100, name:"waleed",state:"online",img:"../assets/010.jpg" }
+    { id:1, password:"123" , name:"Khalid",state:"online",img:"../assets/01.jpg" },
+    { id:2, password:"123" , name:"Taherah Big",state:"offline",img:"../assets/03.jpg" },
+    { id:3, password:"123" , name:"Sami Rafi",state:"online",img:"../assets/02.jpg" },
+    { id:4, password:"123" , name:"Nargis Hawa",state:"online",img:"../assets/04.jpg" },
+    { id:5, password:"123" , name:"Rashid Samim",state:"offline",img:"../assets/05.jpg" },
+    { id:100, password:"123" , name:"waleed",state:"online",img:"../assets/010.jpg" }
   ];
 
   AllChatMessages = [
@@ -37,8 +45,10 @@ export class SendUserDetailsService {
     {from:100,to:1,message:'Ok, thank you have a good day',time:"9:01 AM , Today"},
     {from:1,to:100,message:'Bye, see you',time:"9:05 AM , Today"},
     
-    {from:1,to:3,message:'Bye, see you',time:"9:05 AM , Today"},
-    {from:1,to:3,message:'Bye, see you',time:"9:05 AM , Today"},
+    {from:1,to:3,message:'hi, see you',time:"9:05 AM , Today"},
+    {from:3,to:1,message:'Bye, see you',time:"9:05 AM , Today"},
+    {from:1,to:3,message:'hi i am Khalid, see you',time:"9:05 AM , Today"},
+    {from:3,to:1,message:'hi i am Sami Rafi , see you',time:"9:05 AM , Today"},
 
     {from:2,to:100,message:'Hi, dddd how are you i am ID 2',time:"8:55 AM , Today"},
     {from:100,to:2,message:'Hi aaaaaa i am good tnx how about you?',time:"8:56 AM , Today"},
@@ -63,7 +73,7 @@ export class SendUserDetailsService {
   awayuser: any = this.usersList[0];
 
   getMessages(homeUser:any , awayUser:any ){
-    homeUser =  this.usersList[5].id;
+    homeUser =  this.loginedUser.id;
     awayUser =  this.awayuser.id;
     return this.AllChatMessages.filter(function(msg){
       return msg.from == homeUser && msg.to == awayUser || msg.to == homeUser  && msg.from == awayUser ;
@@ -71,16 +81,17 @@ export class SendUserDetailsService {
   }
 
   usersListResult(searchedName){
-    var searchedNameLC = searchedName.toLowerCase()
-
+    var searchedNameLC = searchedName.toLowerCase();
+    var y = this.loginedUser;
     return this.usersList.filter(function(oneUser:any){
-      return oneUser.name.toLowerCase().includes(searchedNameLC) && oneUser.id !== 100 ;
+      return oneUser.name.toLowerCase().includes(searchedNameLC) && oneUser.id !== y.id ;
     })
   }
 
   setUserId(user){ 
     this.awayuser = user; 
   }
-
-  constructor(private router: Router) { }
+  
+  constructor(private router: Router) {
+  }  
 }

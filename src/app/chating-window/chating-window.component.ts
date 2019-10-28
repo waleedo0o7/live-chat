@@ -44,10 +44,13 @@ export class ChatingWindowComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.clear();
     this.awayPersonData = this.service.awayuser;
-    let loginKey = 'login information';
-    let loginInfo = this.service.usersList[5];
-    localStorage.setItem(loginKey, JSON.stringify(loginInfo));
-    this.homePersonData = loginInfo;
+    let loginName = 'username';
+    let loginPassword = 'Password';
+    let loginedUser = this.service.loginedUser;
+    localStorage.setItem(loginName, JSON.stringify(loginedUser.name));
+    localStorage.setItem(loginPassword, JSON.stringify(loginedUser.password));
+    this.homePersonData = loginedUser;
   }
 }
