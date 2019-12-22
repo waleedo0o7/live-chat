@@ -1,7 +1,7 @@
-<div class="login-page">
+<div id="add-new-user-page" class="login-page">
     <div class="card">
-        <img class="logo" src="../../assets/logo.png">
-        <h2> login  </h2>
+        <img class="logo" src="../../assets/new-user.svg">
+        <h2> Add New User  </h2>
         <form>
             <div class="form-group">
                 <label for="exampleInputEmail1">username</label>
@@ -11,7 +11,13 @@
                 <label for="exampleInputPassword1">Password</label>
                 <input #password [(value)]="password.value" type="password" class="form-control" id="exampleInputPassword1" autocomplete="off">
             </div>
-            <input value="Login" type="submit" (click)="login(username.value,password.value)" class="btn btn-primary btn-block" />
+            <div class="form-group">
+                <label for="exampleInputuserID1">user id</label>
+                <input #userID [(value)]="userID.value" type="text" class="form-control" id="exampleInputuserID1" autocomplete="off">
+            </div>
+            <input value="Add User" type="submit" (click)="addNewUser(username.value,password.value,userID.value)" class="btn btn-primary btn-block" />
         </form>
     </div>
 </div>
+
+

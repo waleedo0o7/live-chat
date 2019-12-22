@@ -1,10 +1,11 @@
 
-<div class="card">   
+<div class="card">
+
     <div class="card-header msg_head">
         <div class="d-flex bd-highlight">
             <div class="img_cont">
                 <img src="{{getUser.img}}" class="rounded-circle user_img">
-                <span class="online_icon"></span>
+                <!-- <span class="online_icon"></span> -->
             </div>
             <div class="user_info">
                 <span>Chat with {{getUser.name}}</span>
@@ -14,7 +15,7 @@
     </div>
 
 
-    <div class="card-body msg_card_body">
+    <div class="card-body msg_card_body" #messagesBody>
         <div *ngFor="let message of chatMessages">
 
             <div *ngIf="message.from!==homePersonData.id" class="d-flex justify-content-start mb-4">

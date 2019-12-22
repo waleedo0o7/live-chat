@@ -19,7 +19,8 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { LoginComponent } from './login/login.component'; 
+import { LoginComponent } from './login/login.component';
+import { AddUserComponent } from './add-user/add-user.component'; 
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     UsersListComponent,
     ChatingWindowComponent,
-    LoginComponent
+    LoginComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,

@@ -23,9 +23,9 @@
                             </div>
                         
                             <div class="card-body contacts_body">
-                                <ul class="contacts">
+                                <ul #userli class="contacts">
                         
-                                    <li *ngFor="let user of searchedResult" (click)="sendClickedUserData(user)" class="one-user">
+                                    <li  *ngFor="let user of searchedResult;let i = index" (click)="sendClickedUserData(user , i)" class="one-user">
                                         <div class="d-flex bd-highlight">
                                             <div class="img_cont">
                                                 <img src="{{user.img}}"
@@ -51,3 +51,4 @@
             </div>
         </div>
     </div>
+
