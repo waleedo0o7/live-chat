@@ -22,18 +22,12 @@ export class SendUserDetailsService {
       if (this.loginedUser != undefined && username == this.loginedUser.name && password == "123") {
         localStorage.setItem("loginedUser", JSON.stringify(this.loginedUser));
         this.router.navigate(['main-chat']);
-
-
       } else {
-
         alert("username: waleed - password 123");
-
       }
 
     } catch (ex) {
-
       alert("username: waleed - password 123");
-
     }
   }
 

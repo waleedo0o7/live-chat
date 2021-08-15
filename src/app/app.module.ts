@@ -22,6 +22,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
 import { AddUserComponent } from './add-user/add-user.component'; 
 
+// Hash Links
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -40,8 +42,8 @@ import { AddUserComponent } from './add-user/add-user.component';
     AngularFireAuthModule, // Only required for auth features,
     AngularFireStorageModule, // Only required for storage features
     AngularFireModule.initializeApp(environment.firebase),
-  ],
-  providers: [SendUserDetailsService],
+  ], 
+  providers: [SendUserDetailsService , { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

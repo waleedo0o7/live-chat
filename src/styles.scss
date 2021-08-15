@@ -294,8 +294,8 @@ margin-bottom: 15px !important;
 }
 
 .btn-primary:hover {
-    background-color: #000000;
-    border-color: #000000;
+    background-color: transparent;
+    border-color: #00a3a2;
 }
 
 .login-user-info{
@@ -329,4 +329,10 @@ margin-bottom: 15px !important;
     .card {
         background: #000 !important;
     }
+}
+
+
+a.add-user {
+    color: #fff;
+    margin-top: 5px;
 }
