@@ -1,26 +1,25 @@
-
 <div class="card">
 
     <div class="card-header msg_head">
         <div class="d-flex bd-highlight">
             <div class="img_cont">
-                <img src="{{getUser.img}}" class="rounded-circle user_img">
+                <img src="{{service.awayUserData.photoURL}}" class="rounded-circle user_img">
                 <!-- <span class="online_icon"></span> -->
             </div>
             <div class="user_info">
-                <span>Chat with {{getUser.name}}</span>
-                <p>{{messagesLength}} Messages</p>
+                <span> {{service.awayUserData.displayName}} </span>
+                <!-- <p> messagesLength Messages</p> -->
+                <!-- <a class="btn btn-primary mb-3" (click)="service.sendMessageToFirebase( service.loginedUserData.uid , service.awayUserData.uid , 'hello')"> test </a> -->
             </div>
         </div>
     </div>
 
+    <div class="card-body msg_card_body">
+        <div *ngFor="let message of service.chatMessagesList">
 
-    <div class="card-body msg_card_body" #messagesBody>
-        <div *ngFor="let message of chatMessages">
-
-            <div *ngIf="message.from!==homePersonData.id" class="d-flex justify-content-start mb-4">
+            <div *ngIf="message.from == service.mainLoginedUserData.uid" class="d-flex justify-content-start mb-4">
                 <div class="img_cont_msg">
-                    <img src="{{getUser.img}}" class="rounded-circle user_img_msg">
+                    <img src="{{service.loginedUserData.photoURL}}" class="rounded-circle user_img_msg">
                 </div>
                 <div class="msg_cotainer">
                     {{message.message}}
@@ -28,29 +27,29 @@
                 </div>
             </div>
 
-            <div *ngIf="message.from==homePersonData.id" class="d-flex justify-content-end mb-4">
+            <div *ngIf="message.from !== service.mainLoginedUserData.uid" class="d-flex justify-content-end mb-4">
                 <div class="msg_cotainer_send">
-                        {{message.message}}
+                    {{message.message}}
                     <span class="msg_time_send">{{message.time}}</span>
                 </div>
                 <div class="img_cont_msg">
-                    <img [src]="homePersonData.img" class="rounded-circle user_img_msg">
+                    <img src="{{service.awayUserData.photoURL}}" class="rounded-circle user_img_msg">
                 </div>
             </div>
-        </div> 
+
+        </div>
     </div>
-    
     
     <div class="card-footer">
         <div class="input-group">
             <div class="input-group-append">
                 <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
             </div>
-            <textarea [(value)]="txtareaVal" [(ngModel)]="txtareaVal" #msgInput (keydown.enter)="confirmText(msgInput.value);false"  name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-            <div class="input-group-append">
+            <input [(value)]="txtareaVal" [(ngModel)]="txtareaVal" #msgInput (keydown.enter)="confirmText(msgInput.value);false"  name="" class="form-control type_msg" placeholder="Type your message..." />
+            <div (click)="service.sendMessageToFirebase( service.loginedUserData.uid , service.awayUserData.uid  ,  txtareaVal  )"  class="input-group-append">
                 <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
             </div>
         </div>
     </div>
-    
+
 </div>

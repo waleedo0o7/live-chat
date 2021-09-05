@@ -15,7 +15,8 @@
                 <label for="exampleInputuserID1">user id</label>
                 <input #userID [(value)]="userID.value" type="text" class="form-control" id="exampleInputuserID1" autocomplete="off">
             </div>
-            <input value="Add User" type="submit" (click)="addNewUser(username.value,password.value,userID.value)" class="btn btn-primary btn-block" />
+            <!-- <input value="Add User" type="submit" (click)="addNewUser(username.value,password.value,userID.value)" class="btn btn-primary btn-block" /> -->
+            <input value="Add User" type="submit"  class="btn btn-primary btn-block" />
         </form>
         <a href="#" class="add-user" routerLink="/login"> Back To Login</a>
     </div>

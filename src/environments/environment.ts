@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebase : {    
+  firebase : {
       apiKey: "AIzaSyD9pRhCpZTVbp1UnYHl6U6TW5GuavYiRdU",
       authDomain: "angular-live-chat.firebaseapp.com",
       databaseURL: "https://angular-live-chat.firebaseio.com",

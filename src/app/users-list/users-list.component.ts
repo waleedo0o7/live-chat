@@ -1,4 +1,5 @@
 import { Component, OnInit, NgModule, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { SendUserDetailsService } from '../shared/send-user-details.service';
 
 @Component({
@@ -8,54 +9,46 @@ import { SendUserDetailsService } from '../shared/send-user-details.service';
 })
 export class UsersListComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('userli', { static: false }) userli: ElementRef;
+  constructor(private service: SendUserDetailsService  , private firestore: AngularFirestore ) {}
 
-  usersList: any;
-
-  loginedUser: any;
-
-  constructor(private service: SendUserDetailsService) {
-  }
-
-  oldi: number = 0;
-
-  sendClickedUserData(userId: any, i: number) {
-
-    this.userli.nativeElement.children[this.oldi].classList.remove("active");
-
-    this.userli.nativeElement.children[i].classList.add("active");
-
-    this.service.setUserId(userId);
-
-    this.oldi = i;
-
-  }
-
-  searchedName: any;
-
-  get searchedResult() {
-    if (this.searchedName) {
-      var x = this.service.usersListResult(this.searchedName);
-      return x;
+  toggleActiveClass(i){
+    if ( this.service.usersList[i].isActive === false ) {
+      for( let x = 0 ; x < this.service.usersList.length ; x++)  {
+        this.service.usersList[x].isActive = false
+      }
+      this.service.usersList[i].isActive = true
     } else {
-      var y = this.loginedUser;
-      return this.service.usersList.filter(function (item) {
-        return item.id !== y.id;
-      });
-
+      this.service.usersList[i].isActive = false      
     }
   }
 
-  list: any;
+  searchedUsersList = this.service.usersList;
+  loginedUser: any;
+  searchedName: any;
+  oldi: number = 0;
+
+
+  usersListResult(searchedName:any) {
+    
+    let searchedNameLC = searchedName.toLowerCase(); 
+    this.searchedUsersList = this.service.usersList.filter(function (oneUser: any) {
+      return oneUser.displayName.toLowerCase().includes(searchedNameLC);
+    })
+  }
+
+
+
+
 
   ngOnInit() {
 
-    // this.usersList = this.service.usersList;
+    this.service.getUsersFromFirebase();
 
-    this.loginedUser = this.service.loginedUser;
+    // this.service.getMessagesFromFirebase();
+
+    // this.loginedUser = this.service.loginedUser;
 
     // this.service.getUsers().subscribe(documentsSnapshot => {
-
     //   this.service.usersList = documentsSnapshot.docs.map(document => {
     //     return {
     //       id: +document.id,
@@ -65,29 +58,44 @@ export class UsersListComponent implements OnInit, AfterViewInit {
     //       img: document.data()['img']
     //     }
     //   })
-
     // })
 
-    this.service.listenForUsersChanges().subscribe(data => {
-      this.service.usersList = data.map(snapShot => {
-        return {
-          id: +snapShot.payload.doc.id,
-          password: snapShot.payload.doc.data()['password'],
-          name: snapShot.payload.doc.data()['name'],
-          state: snapShot.payload.doc.data()['state'],
-          img: snapShot.payload.doc.data()['img']
-        }
-      })
-    })
 
-    // console.log(this.service.getUsers());
+    // this.service.listenForUsersChanges().subscribe(data => {
+    //   this.service.usersList = data.map(snapShot => {
+
+    //     // console.log('snapShot data');
+    //     // console.log(snapShot.payload.doc.data());
+        
+    //     return {
+    //       id: +snapShot.payload.doc.id,
+    //       password: snapShot.payload.doc.data()['password'],
+    //       name: snapShot.payload.doc.data()['name'],
+    //       state: snapShot.payload.doc.data()['state'],
+    //       img: snapShot.payload.doc.data()['img']
+    //     }
+    //   })
+    // })
+
+
+    // this.service.listenForMessagesChanges().subscribe(data => {
+    //   this.service.AllChatMessages = data.map( snapShot => {
+    
+    // console.log(this.service.AllChatMessages);
+        
+    //     return {
+    //       from: snapShot.payload.doc.data()['from'],
+    //       to: snapShot.payload.doc.data()['to'],
+    //       message: snapShot.payload.doc.data()['message'],
+    //       time: snapShot.payload.doc.data()['time']
+    //     }
+    //   })
+    // })
+
   }
-
-
+ 
   ngAfterViewInit() {
-
-    this.userli.nativeElement.children[0].classList.add("active");
-
+    // this.userli.nativeElement.children[0].classList.add("active");
   }
 
 }

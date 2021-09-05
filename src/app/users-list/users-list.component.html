@@ -1,54 +1,32 @@
-    
-    <div class="login-user-info ">
-        <img class="img-fluid" src="{{loginedUser.img}}">
-        <div>
-            <h3> Welcome {{loginedUser.name}} , Your Id Is ( {{loginedUser.id}} ) </h3>
-            <p> Enjoy Chating ;)</p>
-        </div>
-    </div>
+<div class="card mb-sm-3 mb-md-0 contacts_card">
 
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-4 col-xl-3 chat">
-
-
-                    <div class="card mb-sm-3 mb-md-0 contacts_card">
-                            <div class="card-header">
-                                <div class="input-group">
-                                    <input #searchInput [(ngModel)]="searchedName" (input)="usersListResult(searchInput.value)" type="text" placeholder="Search..." name="" class="form-control search">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="card-body contacts_body">
-                                <ul #userli class="contacts">
-                        
-                                    <li  *ngFor="let user of searchedResult;let i = index" (click)="sendClickedUserData(user , i)" class="one-user">
-                                        <div class="d-flex bd-highlight">
-                                            <div class="img_cont">
-                                                <img src="{{user.img}}"
-                                                    class="rounded-circle user_img">
-                                                <span [ngClass]="{'offline': user.state=='offline'}" class="online_icon"></span>
-                                            </div>
-                                            <div class="user_info">
-                                                <span>{{user.name}}</span>
-                                                <p>{{user.name}} is {{user.state}}</p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
-                            <div class="card-footer"></div>
-                        </div>
-
-
-            </div>
-            <div class="col-md-8 col-xl-6 chat">
-                <chating-window></chating-window>
+    <div class="card-header">
+        <div class="input-group">
+            <input #searchInput [(ngModel)]="searchedName" (input)="usersListResult(searchInput.value)" type="text" placeholder="Search..." name="" class="form-control search">
+            <div class="input-group-prepend">
+                <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
             </div>
         </div>
     </div>
 
+    <div class="card-body contacts_body">
+        <ul class="contacts">
+            <li [ngClass]="{'active':user.isActive == true }"  #awayUser class="one-user" *ngFor="let user of searchedUsersList ; index as i " (click)="service.onClickGetUserData(user) ; toggleActiveClass(i)  ;   this.service.getMessagesFromFirebase( this.service.mainLoginedUserData.uid , user.uid ) ">
+                <div class="d-flex bd-highlight">
+                    <div class="img_cont">
+                        <img src="{{user.photoURL}}" class="rounded-circle user_img">
+                        <span [ngClass]="{'offline': user.state=='offline'}" class="online_icon"></span>
+                    </div>
+                    <div class="user_info">
+                        <span *ngIf="user.displayName">{{user.displayName}}</span>
+                        <span *ngIf="!user.displayName"> Default User </span>
+                        <p>{{user.displayName}} is {{user.state}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-footer"></div>
+
+</div>

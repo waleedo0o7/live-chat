@@ -2,6 +2,11 @@
     <div class="card">
         <img class="logo" src="../../assets/logo.png">
         <h2> login  </h2>
+
+        <a class="btn btn-primary mb-3" (click)="service.SignIn('waleedhd1@gmail.com', '123456')"> SignIn </a>
+        <!-- <a class="btn btn-primary mb-3" (click)="service.SignUp('waleedhd7@gmail.com', '123456')"> SignUp </a> -->
+        <!-- <a class="btn btn-primary mb-3" (click)="service.updateCurrentUser()"> edit </a> -->
+        
         <form>
             <div class="form-group">
                 <label for="exampleInputEmail1">username</label>
@@ -16,3 +21,4 @@
         <a href="#" class="add-user" routerLink="/add-user"> Add User</a>
     </div>
 </div>
+

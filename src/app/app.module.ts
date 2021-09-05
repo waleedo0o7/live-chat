@@ -8,19 +8,21 @@ import { ChatingWindowComponent } from './chating-window/chating-window.componen
 import { SendUserDetailsService } from './shared/send-user-details.service';
 import { FormsModule } from '@angular/forms';
 
-
+// Components
+import { LoginComponent } from './login/login.component';
+import { MainChatComponent } from './main-chat/main-chat.component';
+import { AddUserComponent } from './add-user/add-user.component'; 
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 
-
 // Firebase modules 
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { LoginComponent } from './login/login.component';
-import { AddUserComponent } from './add-user/add-user.component'; 
+
+import { HttpClientModule } from "@angular/common/http";
 
 // Hash Links
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -31,13 +33,15 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     UsersListComponent,
     ChatingWindowComponent,
     LoginComponent,
-    AddUserComponent
+    AddUserComponent,
+    MainChatComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     AngularFireModule,
+    HttpClientModule,
     AngularFirestoreModule, // Only required for database features
     AngularFireAuthModule, // Only required for auth features,
     AngularFireStorageModule, // Only required for storage features

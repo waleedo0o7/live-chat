@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { SendUserDetailsService } from '../shared/send-user-details.service';
 
 @Component({
@@ -8,94 +9,90 @@ import { SendUserDetailsService } from '../shared/send-user-details.service';
 })
 export class ChatingWindowComponent implements OnInit {
 
-  @ViewChild('messagesBody', { static: false }) messagesBody: ElementRef;
-
-  get getUser()
-  {
-    return this.service.awayuser;
+  constructor(private service: SendUserDetailsService , private firestore: AngularFirestore) {
+    // service.getMessages(this.homePersonData,this.awayPersonData);
   }
 
-  homePersonData:any;
-  awayPersonData:any;
-  
+  // @ViewChild('messagesBody', { static: false }) messagesBody: ElementRef;
+
+  // get getUser()
+  // {
+  //   return this.service.awayuser;
+  // }
+
   txtareaVal:any="";
 
-  scrollToBottom(el: Element){
-    var elHegith = (el.scrollHeight + 200 );
-    el.scrollTo(0, elHegith)
-  }
-
-  confirmText(funval:string){
-
-    this.service.AllChatMessages.push({
-        from:this.homePersonData.id,
-        to:this.getUser.id,
-        message: funval,
-        time: this.stampTime()
-      });
-
-      this.txtareaVal = "";
-
-      setTimeout(() => {
-        var messagesBodyVar = this.messagesBody.nativeElement;
-        this.scrollToBottom(messagesBodyVar);        
-      }, 1);
-  }
+  // scrollToBottom(el: Element){
+  //   var elHegith = (el.scrollHeight + 200 );
+  //   el.scrollTo(0, elHegith)
+  // }
 
 
-  get chatMessages(){
-    return this.service.getMessages(this.homePersonData,this.awayPersonData);
-  };
+  // confirmText(funval:string){
+  //     if (funval){
+  //       // this.service.AllChatMessages.push({
+  //       //   from:this.homePersonData.id,
+  //       //   to:this.getUser.id,
+  //       //   message: funval,
+  //       //   time: this.stampTime()
+  //       // });
+  //       this.firestore.collection("messages").add({
+  //         from:this.homePersonData.id,
+  //         to:this.getUser.id,
+  //         message: funval,
+  //         time: this.stampTime()
+  //       });
+  //       this.txtareaVal = "";
+  //       setTimeout(() => {
+  //         var messagesBodyVar = this.messagesBody.nativeElement;
+  //         this.scrollToBottom(messagesBodyVar);        
+  //       }, 1);
+  //     }
+  // }
 
-  get messagesLength(){
-    return this.chatMessages.length;
-  }
 
-  stampTime(){
-    var currentDate = new Date();
+  // get chatMessages(){
+  //   return this.service.getMessages(this.homePersonData,this.awayPersonData);
+  // };
 
-    var minutes = currentDate.getMinutes();
-    var hours = currentDate.getHours()
+  // get messagesLength(){
+  //   return this.chatMessages.length;
+  // }
 
-    var timeString = hours + ":" + minutes;
-
-    return timeString;
-  }
-
-  constructor(private service: SendUserDetailsService) {
-    service.getMessages(this.homePersonData,this.awayPersonData);
-  }
+  // stampTime(){
+  //   var currentDate = new Date();
+  //   var minutes = currentDate.getMinutes();
+  //   var hours = currentDate.getHours()
+  //   var timeString = hours + ":" + minutes;
+  //   return timeString;
+  // }
 
   ngOnInit() {
 
-    // localStorage.clear();
+    // this.firestore.collection("messages").add({
+    //   from:this.homePersonData.id,
+    //   to: 2 ,
+    //   message: 'hi',
+    //   time: this.service.stampTime()
+    // });
 
-    this.awayPersonData = this.service.awayuser;
+    // alert('sssss');
 
-    //console.log(messagesBodyVar);
-
+    // this.awayPersonData = this.service.awayuser;
+    // console.log(messagesBodyVar);
     // let loginName = 'username';
     // let loginPassword = 'Password';
-    
-    this.homePersonData = localStorage.getItem("loginedUser");
-
-    let loginedUser = this.service.loginedUser;
-
+    // this.homePersonData = localStorage.getItem("loginedUser");
+    // let loginedUser = this.service.loginedUser;
     // localStorage.setItem(loginName, JSON.stringify(loginedUser.name));
     // localStorage.setItem(loginPassword, JSON.stringify(loginedUser.password));
-
-    this.homePersonData = loginedUser;
+    // this.homePersonData = loginedUser;
   }
 
 
   ngAfterViewInit() {
-
-    var messagesBodyVar = this.messagesBody.nativeElement;
-
-    console.log(this.stampTime());
-
-    this.scrollToBottom(messagesBodyVar);
-
+    // var messagesBodyVar = this.messagesBody.nativeElement;
+    // this.scrollToBottom(messagesBodyVar);
   }
 
 }
