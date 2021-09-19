@@ -10,8 +10,8 @@
     </div>
 
     <div class="card-body contacts_body">
-        <ul class="contacts">
-            <li [ngClass]="{'active':user.isActive == true }"  #awayUser class="one-user" *ngFor="let user of searchedUsersList ; index as i " (click)="service.onClickGetUserData(user) ; toggleActiveClass(i)  ;   this.service.getMessagesFromFirebase( this.service.mainLoginedUserData.uid , user.uid ) ">
+        <ul class="contacts all-users" #allUsers>
+            <li #awayUser class="one-user" *ngFor="let user of searchedUsersList ; index as i " (click)="service.onClickGetUserData(user) ;addActiveClass(awayUser)  ;   this.service.getMessagesFromFirebase( this.service.loginedUserData.uid , user.uid ) ; service.scrollToBottom()">
                 <div class="d-flex bd-highlight">
                     <div class="img_cont">
                         <img src="{{user.photoURL}}" class="rounded-circle user_img">
@@ -20,7 +20,7 @@
                     <div class="user_info">
                         <span *ngIf="user.displayName">{{user.displayName}}</span>
                         <span *ngIf="!user.displayName"> Default User </span>
-                        <p>{{user.displayName}} is {{user.state}}</p>
+                        <p>{{user.email}}</p>
                     </div>
                 </div>
             </li>
@@ -30,3 +30,7 @@
     <div class="card-footer"></div>
 
 </div>
+
+<pre>
+{{ service.usersList  |  json }}
+</pre>

@@ -1,12 +1,10 @@
 <div class="login-user-info ">
-    <img class="img-fluid" src="../../assets/010.jpg">
-    <div>
-        <h3> Welcome {{service.loginedUserData.displayName}}   </h3>
-        <p> Enjoy Chating ;)</p>
-        <a class="btn btn-primary mb-3" (click)="service.SignOut()"> SignOut </a>
+    <img class="img-fluid" [src]="service.loginedUserData.photoURL">
+    <div>        
+        <h3> Welcome {{service.loginedUserData.displayName}}  <a class="sign-out" (click)="service.SignOut()"> SignOut </a> </h3>
+        <p> Enjoy Chating 😄 </p>
     </div>
 </div>
-
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-4 col-xl-3 chat">

@@ -11,10 +11,6 @@ export class AddUserComponent implements OnInit {
 
   constructor(private router: Router, private service: SendUserDetailsService) { }
 
-  // addNewUser(username, password, userID) {
-  //   this.service.addNewUser(username, password, userID);
-  // }
-
   ngOnInit() {
   }
 

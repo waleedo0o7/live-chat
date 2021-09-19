@@ -1,9 +1,10 @@
+import { ViewChild, ElementRef, Component} from '@angular/core';
 import { Injectable , NgZone} from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFirestore , AngularFirestoreDocument} from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface User {
   uid: string;
@@ -20,37 +21,38 @@ export interface User {
 
 export class SendUserDetailsService {
 
-    constructor(private http:HttpClient , public router: Router, private firestore: AngularFirestore , public afs: AngularFirestore, public afAuth: AngularFireAuth,public ngZone: NgZone) {
-        /* Saving user data in localstorage when 
-        logged in and setting up null when logged out */
-        this.afAuth.authState.subscribe(user => {
-          if (user) {
-            this.mainLoginedUserData = user;
-
-            localStorage.setItem('user', JSON.stringify(this.mainLoginedUserData));
-            JSON.parse(localStorage.getItem('user'));
-          } else {
-            localStorage.setItem('user', null);
-            JSON.parse(localStorage.getItem('user'));
-          }
-        })
-        this.loginedUserData  =  JSON.parse(localStorage.getItem('user'));
-    }
-
-    usersList:any = [];
+    constructor(private http:HttpClient , public router: Router, private firestore: AngularFirestore , public afs: AngularFirestore, public afAuth: AngularFireAuth,public ngZone: NgZone) {}
 
     chatMessagesList:any = [];
 
+    usersList = [] ;
+
     mainLoginedUserData: any; // Save logged in user data
 
-    loginedUserData:any;
+    loginedUserData:any = {
+      uid: '',
+      email: '',
+      displayName: '',
+      photoURL: '',
+      emailVerified: false,
+      state: '',
+    };
 
-    awayUserData:User;
-
+    awayUserData:any;
     txtareaVal:any;
+    limit:any = 2;
+
+    scrollToBottom(msgBody: Element){
+      setTimeout(() => {
+        var elHegith = (msgBody.scrollHeight + 200 );
+        msgBody.scrollTo(0, elHegith)
+      }, 0);
+    }
+
 
     onClickGetUserData(awayUser) {
       this.awayUserData = awayUser;
+      console.log(this.loginedUserData);
     }
 
     stampServerTime(){
@@ -76,11 +78,14 @@ export class SendUserDetailsService {
     // Sign up with email/password
     SignUp(email, password) {
       return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-        .then((result) => {
+        .then((result) => {          
           /* Call the SendVerificaitonMail() function when new user sign 
           up and returns promise */
           this.SendVerificationMail();
           this.SetUserData(result.user);
+
+          window.alert(`${result.user.email} Added Succesfuly`)
+          this.router.navigate(['login']);
         }).catch((error) => {
           window.alert(error.message)
         })
@@ -95,12 +100,10 @@ export class SendUserDetailsService {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
-        photoURL: user.photoURL ,
+        photoURL: user.photoURL,
         emailVerified: user.emailVerified,
         state: 'offline'
       }
-      console.log('SetUserData user');    
-      console.log(user);      
       return userRef.set(userData, {
         merge: true
       })
@@ -123,25 +126,34 @@ export class SendUserDetailsService {
     }
 
     getUsersFromFirebase() {
+
+      this.usersList = [];
+
       let items = this.firestore.collection('users').get().subscribe(documentsSnapshot => {
         let item = documentsSnapshot.docs.map(document => {
+          
+          
           let dName:any;
           if( document.data()['displayName'] ) {
             dName = document.data()['displayName']
           } else {
             dName = 'Default Name'
           }
+          let imgURL:any;
+          if( document.data()['photoURL']  ) {
+            imgURL = document.data()['photoURL']
+          } else {
+            imgURL = 'http://chat.waleedsa3ed.com/assets/new-user.svg'
+          }
 
-          if ( document.data()['uid']  !== this.loginedUserData.uid) {
-
+          if (document.data()['uid']  != this.loginedUserData.uid) {
             this.usersList.push({
               uid : document.data()['uid'] ,
-              photoURL : document.data()['photoURL'],
+              photoURL : imgURL,
               displayName : dName,
               email : document.data()['email'],
-              state : document.data()['state'],
-              isActive : false
-            })
+              state : document.data()['state']
+            })         
           }
         })
       })
@@ -171,10 +183,11 @@ export class SendUserDetailsService {
       return finalFirebaseDate;
     }
 
+
     getMessagesFromFirebase( from:any , to:any) {
-      
+
       this.chatMessagesList = [];
-      let roomName:any ;
+      let roomName:any;
 
       if ( from > to ) {
         roomName = `${from}-${to}`
@@ -182,19 +195,19 @@ export class SendUserDetailsService {
         roomName = `${to}-${from}`
       }
 
-      let messagesRef = this.firestore.collection(`${roomName}`, ref => ref.orderBy('time','asc'))
-      .get().subscribe(documentsSnapshot => {
-            let test = documentsSnapshot.docs.map(document => {
-            this.chatMessagesList.push({
-              from : document.data()['from'] ,
-              message : document.data()['message'] ,
-              time : this.convertTimestampToDate(document.data()['time'].toDate()) ,
-              to : document.data()['to']
-            })        
-          })
-        })
-        console.log('chatMessagesList');
-        console.log(this.chatMessagesList);
+      let messagesRef = this.firestore.collection(`${roomName}`, ref => ref.orderBy('time','asc')).get();
+
+      messagesRef.subscribe(documentsSnapshot => {
+          let test = documentsSnapshot.docs.map(document => {
+          this.chatMessagesList.push({
+            from : document.data()['from'] ,
+            message : document.data()['message'],
+            time : this.convertTimestampToDate(document.data()['time'].toDate()) ,
+            to : document.data()['to']
+          });
+        })        
+      })
+
     }
 
     updateCurrentUser(){
@@ -210,12 +223,8 @@ export class SendUserDetailsService {
     }
 
     sendMessageToFirebase(from:any , to:any , message:any ){
-      
-
-      // alert(from + to +  message )
 
       let roomName:any ;
-
 
       if ( from > to ) {
         roomName = `${from}-${to}`
@@ -230,6 +239,16 @@ export class SendUserDetailsService {
         time: this.stampServerTime()
       });
 
-      this.getMessagesFromFirebase(`${from}` , `${to}`)
+      this.txtareaVal = '';
+
+      this.chatMessagesList.push ({
+        from: `${from}`,
+        to: `${to}`,
+        message: message ,
+        time:  this.convertTimestampToDate(this.stampServerTime().toDate()),
+      })
+
+
     }
+
 }
