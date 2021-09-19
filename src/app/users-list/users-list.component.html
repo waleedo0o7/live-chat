@@ -10,7 +10,42 @@
     </div>
 
     <div class="card-body contacts_body">
-        <ul class="contacts all-users" #allUsers>
+
+
+
+        <div *ngIf="!searchedUsersList.length" class="wrapper">
+            <div class="wrapper-cell">
+              <div class="image"></div>
+              <div class="text">
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+              </div>
+            </div>
+            <div class="wrapper-cell">
+              <div class="image"></div>
+              <div class="text">
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+              </div>
+            </div>
+            <div class="wrapper-cell">
+              <div class="image"></div>
+              <div class="text">
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+                <div class="text-line"></div>
+              </div>
+            </div>
+          </div>
+
+
+
+        <ul *ngIf="searchedUsersList" class="contacts all-users" #allUsers>
             <li #awayUser class="one-user" *ngFor="let user of searchedUsersList ; index as i " (click)="service.onClickGetUserData(user) ;addActiveClass(awayUser)  ;   this.service.getMessagesFromFirebase( this.service.loginedUserData.uid , user.uid ) ; service.scrollToBottom()">
                 <div class="d-flex bd-highlight">
                     <div class="img_cont">
@@ -30,7 +65,7 @@
     <div class="card-footer"></div>
 
 </div>
-
+<!-- 
 <pre>
 {{ service.usersList  |  json }}
-</pre>
+</pre> -->
