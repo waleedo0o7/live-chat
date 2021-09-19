@@ -9,7 +9,7 @@ import { SendUserDetailsService } from '../shared/send-user-details.service';
 })
 export class UsersListComponent implements OnInit, AfterViewInit {
 
-  constructor(private service: SendUserDetailsService  , private firestore: AngularFirestore ) {}
+  constructor(public service: SendUserDetailsService  , public firestore: AngularFirestore ) {}
 
   @ViewChild('allUsers' , { static : false }) allUsers : ElementRef;
 

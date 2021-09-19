@@ -10,7 +10,7 @@ import { SendUserDetailsService } from '../shared/send-user-details.service';
 
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router ,private service: SendUserDetailsService) { }
+  constructor(public router: Router ,public service: SendUserDetailsService) { }
 
   ngOnInit() {
     localStorage.clear();

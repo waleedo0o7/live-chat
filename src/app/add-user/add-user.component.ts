@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private router: Router, private service: SendUserDetailsService) { }
+  constructor(private router: Router, public service: SendUserDetailsService) { }
 
   ngOnInit() {
   }

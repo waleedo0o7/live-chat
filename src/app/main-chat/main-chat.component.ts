@@ -11,7 +11,7 @@ import { SendUserDetailsService } from '../shared/send-user-details.service';
 })
 export class MainChatComponent implements OnInit {
 
-  constructor(private service: SendUserDetailsService , private http:HttpClient , public router: Router, private firestore: AngularFirestore , public afs: AngularFirestore, public afAuth: AngularFireAuth,public ngZone: NgZone) {}
+  constructor(public service: SendUserDetailsService , public http:HttpClient , public router: Router, private firestore: AngularFirestore , public afs: AngularFirestore, public afAuth: AngularFireAuth,public ngZone: NgZone) {}
 
   ngOnInit() {
 

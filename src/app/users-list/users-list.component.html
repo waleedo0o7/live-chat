@@ -46,7 +46,7 @@
 
 
         <ul *ngIf="searchedUsersList" class="contacts all-users" #allUsers>
-            <li #awayUser class="one-user" *ngFor="let user of searchedUsersList ; index as i " (click)="service.onClickGetUserData(user) ;addActiveClass(awayUser)  ;   this.service.getMessagesFromFirebase( this.service.loginedUserData.uid , user.uid ) ; service.scrollToBottom()">
+            <li #awayUser class="one-user" *ngFor="let user of searchedUsersList ; index as i " (click)="service.onClickGetUserData(user) ;addActiveClass(awayUser)  ;   this.service.getMessagesFromFirebase( this.service.loginedUserData.uid , user.uid ) ;">
                 <div class="d-flex bd-highlight">
                     <div class="img_cont">
                         <img src="{{user.photoURL}}" class="rounded-circle user_img">

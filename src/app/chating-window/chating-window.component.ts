@@ -9,7 +9,7 @@ import { SendUserDetailsService } from '../shared/send-user-details.service';
 })
 export class ChatingWindowComponent implements OnInit {
 
-  constructor(private service: SendUserDetailsService , private firestore: AngularFirestore) {
+  constructor(public service: SendUserDetailsService , public firestore: AngularFirestore) {
   }
 
   @ViewChild('msgBody', { static: false }) msgBody: ElementRef;
