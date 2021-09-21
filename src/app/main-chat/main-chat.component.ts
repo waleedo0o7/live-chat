@@ -18,6 +18,8 @@ export class MainChatComponent implements OnInit {
     this.afAuth.authState.subscribe(user => {
       if (user) {
 
+        
+
         this.service.mainLoginedUserData = user;
 
         localStorage.setItem('user', JSON.stringify(this.service.mainLoginedUserData));
@@ -26,21 +28,27 @@ export class MainChatComponent implements OnInit {
         let oneUser = this.firestore.collection('users').doc(user.uid);
         let userDoc = oneUser.get();
     
+
+
         userDoc.subscribe(documentsSnapshot => {
           let item = documentsSnapshot.data();
           this.service.loginedUserData  =  item ;
+
+          console.log('item');
+          console.log(item);
+
           if( item['displayName'] ) {
             this.service.loginedUserData.displayName = item['displayName']
           } else {
-            this.service.loginedUserData.displayName = 'Default Name';
+            this.service.loginedUserData.displayName = 'Default Name component';
           }
-
 
           if( item['photoURL'] ) {
-            this.service.loginedUserData.photoURL = item['photoURL']
+            // this.service.loginedUserData.photoURL = item['photoURL']
           } else {
-            this.service.loginedUserData.photoURL = 'http://chat.waleedsa3ed.com/assets/new-user.svg';
+            // this.service.loginedUserData.photoURL = 'http://chat.waleedsa3ed.com/assets/new-user.svg';
           }
+
         })        
       } else {
         localStorage.setItem('user', null);

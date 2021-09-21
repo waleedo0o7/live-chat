@@ -69,7 +69,10 @@ export class SendUserDetailsService {
               this.router.navigate(['main-chat']);              
             }, 600);
           });
-          this.SetUserData(result.user);
+          console.log('result.user');
+          console.log(result.user);
+          
+          // this.SetUserData(result.user);
         }).catch((error) => {
           window.alert(error.message)
         })
@@ -99,7 +102,7 @@ export class SendUserDetailsService {
       const userData: User = {
         uid: user.uid,
         email: user.email,
-        displayName: user.displayName,
+        displayName: 'user.displayName',
         photoURL: user.photoURL,
         emailVerified: user.emailVerified,
         state: 'offline'
@@ -139,6 +142,7 @@ export class SendUserDetailsService {
           } else {
             dName = 'Default Name'
           }
+
           let imgURL:any;
           if( document.data()['photoURL']  ) {
             imgURL = document.data()['photoURL']
