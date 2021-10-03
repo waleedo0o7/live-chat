@@ -102,7 +102,7 @@ export class SendUserDetailsService {
       const userData: User = {
         uid: user.uid,
         email: user.email,
-        displayName: 'user.displayName',
+        displayName: user.displayName,
         photoURL: user.photoURL,
         emailVerified: user.emailVerified,
         state: 'offline'
@@ -187,10 +187,8 @@ export class SendUserDetailsService {
       return finalFirebaseDate;
     }
 
-
     getMessagesFromFirebase( from:any , to:any) {
 
-      this.chatMessagesList = [];
       let roomName:any;
 
       if ( from > to ) {
@@ -199,18 +197,33 @@ export class SendUserDetailsService {
         roomName = `${to}-${from}`
       }
 
-      let messagesRef = this.firestore.collection(`${roomName}`, ref => ref.orderBy('time','asc')).get();
+      let messagesRef = this.firestore.collection('messages').doc('messagesDoc').collection(`${roomName}`, ref => ref.orderBy('time','asc'));
 
-      messagesRef.subscribe(documentsSnapshot => {
-          let test = documentsSnapshot.docs.map(document => {
-          this.chatMessagesList.push({
-            from : document.data()['from'] ,
-            message : document.data()['message'],
-            time : this.convertTimestampToDate(document.data()['time'].toDate()) ,
-            to : document.data()['to']
-          });
-        })        
+      messagesRef.valueChanges().subscribe(docs => {
+        console.log(docs);
+        this.chatMessagesList = [];
+        docs.map(document => {
+          console.log(document);
+          
+            this.chatMessagesList.push({
+              from : document['from'] ,
+              message : document['message'],
+              time : this.convertTimestampToDate(document['time'].toDate()) ,
+              to : document['to']
+            });
+          })        
       })
+
+      // messagesRef.get().subscribe(documentsSnapshot => {
+      //     let test = documentsSnapshot.docs.map(document => {
+      //     this.chatMessagesList.push({
+      //       from : document.data()['from'] ,
+      //       message : document.data()['message'],
+      //       time : this.convertTimestampToDate(document.data()['time'].toDate()) ,
+      //       to : document.data()['to']
+      //     });
+      //   })        
+      // })
 
     }
 
@@ -236,7 +249,7 @@ export class SendUserDetailsService {
         roomName = `${to}-${from}`
       }
 
-      this.firestore.collection(roomName).add({
+      this.firestore.collection('messages').doc('messagesDoc').collection(roomName).add({
         from: `${from}`,
         to: `${to}`,
         message: message ,
@@ -245,12 +258,12 @@ export class SendUserDetailsService {
 
       this.txtareaVal = '';
 
-      this.chatMessagesList.push ({
-        from: `${from}`,
-        to: `${to}`,
-        message: message ,
-        time:  this.convertTimestampToDate(this.stampServerTime().toDate()),
-      })
+      // this.chatMessagesList.push ({
+      //   from: `${from}`,
+      //   to: `${to}`,
+      //   message: message ,
+      //   time:  this.convertTimestampToDate(this.stampServerTime().toDate()),
+      // })
 
 
     }
